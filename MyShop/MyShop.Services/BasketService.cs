@@ -12,8 +12,8 @@ namespace MyShop.Services
 {
     public class BasketService : IBasketService
     {
-        IRepository<Product> productContext;
-        IRepository<Basket> basketContext;
+        private readonly IRepository<Product> productContext;
+        private readonly IRepository<Basket> basketContext;
 
         public const string BasketSessionName = "eCommerceBasket";
 
@@ -74,7 +74,6 @@ namespace MyShop.Services
         {
             Basket basket = GetBasket(httpContext, true);
             BasketItem item = basket.BasketItems.FirstOrDefault(i => i.ProductId == productId);
-
             if (item == null)
             {
                 item = new BasketItem()
@@ -83,16 +82,18 @@ namespace MyShop.Services
                     ProductId = productId,
                     Quantity = 1
                 };
-
+                
                 basket.BasketItems.Add(item);
             }
             else
             {
-                item.Quantity = item.Quantity + 1;
+                item = basket.BasketItems.FirstOrDefault(i => i.ProductId == productId);
+                item.Quantity++;
             }
 
             basketContext.Commit();
         }
+
 
         public void RemoveFromBasket(HttpContextBase httpContext, string itemId)
         {
@@ -154,6 +155,13 @@ namespace MyShop.Services
             {
                 return model;
             }
+        }
+
+        public void ClearBasket(HttpContextBase httpContext)
+        {
+            Basket basket = GetBasket(httpContext, false);
+            basket.BasketItems.Clear();
+            basketContext.Commit();
         }
     }
 }
