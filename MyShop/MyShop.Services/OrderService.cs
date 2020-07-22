@@ -16,7 +16,7 @@ namespace MyShop.Services
         {
             this.orderContext = OrderContext;
         }
-
+            
         public List<Order> GetOrderList()
         {
             return orderContext.Collection().ToList();

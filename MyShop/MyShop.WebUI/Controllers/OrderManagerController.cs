@@ -26,7 +26,7 @@ namespace MyShop.WebUI.Controllers
 
         public ActionResult UpdateOrder(string Id)
         {
-            Order order = orderService.GetOrder(Id);
+            
             ViewBag.StausList = new List<String>()
             {
                 "Order Created",
@@ -34,6 +34,7 @@ namespace MyShop.WebUI.Controllers
                 "Order Shipped",
                 "Order Completed"
             };
+            Order order = orderService.GetOrder(Id);
             return View(order);
         }
         [HttpPost]

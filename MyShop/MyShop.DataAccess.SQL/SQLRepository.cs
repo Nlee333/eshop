@@ -34,8 +34,9 @@ namespace MyShop.DataAccess.SQL
             var t = Find(Id);
             if(context.Entry(t).State == EntityState.Detached)
             {
-                dbset.Remove(t);
+                dbset.Attach(t);
             }
+            dbset.Remove(t);
         }
 
         public T Find(string Id)
