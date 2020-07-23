@@ -27,7 +27,7 @@ namespace MyShop.WebUI.Controllers
         public ActionResult UpdateOrder(string Id)
         {
             
-            ViewBag.StausList = new List<String>()
+            ViewBag.StatusList = new List<String>()
             {
                 "Order Created",
                 "Payment Processed",
